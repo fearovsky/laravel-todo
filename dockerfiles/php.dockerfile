@@ -26,6 +26,10 @@ RUN mkdir -p /usr/src/php/ext/redis \
     && docker-php-ext-configure redis --enable-redis-json \
     && docker-php-ext-install redis
     
+# Switch to laravel user
 USER laravel
+RUN composer global require laravel/installer
+ENV PATH=/home/laravel/.composer/vendor/bin:$PATH
+RUN echo 'export PATH="$PATH:/home/laravel/.composer/vendor/bin"' >> ~/.profile
 
 CMD ["php-fpm", "-y", "/usr/local/etc/php-fpm.conf", "-R"]

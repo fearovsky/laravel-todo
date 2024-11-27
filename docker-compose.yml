@@ -114,3 +114,16 @@ services:
       - "8025:8025"
     networks:
       - laravel
+      
+  laravel:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - ./src:/var/www/html:delegated
+    networks:
+      - laravel
+    entrypoint: [ 'laravel' ]
